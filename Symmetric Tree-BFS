@@ -1,0 +1,58 @@
+#BFS
+#Time Complexity:: O(n)-all nodes are visited in each level and Null values are also process
+#Space Complexity:: O(n)-a list is used at each level, in this case usually less than O(n) as each level has a root element not included in list
+#Did this code successfully run on Leetcode : Yes
+#Any problem you faced while coding this : No
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        if not root:
+            return False
+        
+        #BFT-Iteratively
+        q=deque() #creation of a queue
+        q.append(root) #root node is pushed inot the queue
+        
+        while q: #while q is not null
+            size = len(q) #size of the q in every while loop changes according to node in level
+            self.level=[] #level list to store the nodes at each level
+            
+            
+            for i in range(size): #the nodes in the q are processed
+                node = q.popleft() #a node is popped from q
+                if node!=None: #checking if node is not null
+                    self.level.append(node.val) #the node is pushed into current level list
+                    q.append(node.left) #the left child node of the curr node is pushed into the q
+                    q.append(node.right) #the right child node of the curr node is pushed into the q
+                else:
+                    self.level.append(None) #level list is appended with none so the palidrome function can run
+                
+            if self.checkPalindrome(self.level): #calling palindrome function to check for symmetricity
+                pass #if symmetric then pass
+            else:
+                return False #if not symmetric return False
+        return True #if no False condition triggered then tree is symmetric
+    
+    def checkPalindrome(self,level): #to check if symmetric
+        left=0 
+        right=len(self.level)-1
+        
+        while left<right: #while loop to run  pointers pinching from both ends of level list
+            if self.level[left]==self.level[right]: #if both elements are true
+                left+=1
+                right-=1
+            else:
+                return False 
+        return True #if all nodes are symmetric then return True

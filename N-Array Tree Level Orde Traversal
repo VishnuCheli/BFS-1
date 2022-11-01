@@ -1,0 +1,39 @@
+#Time Complexity:: O(n)-all nodes are visited in each level and Null values are also process
+#Space Complexity:: O(n)-a list is used at each level, in this case usually less than O(n) as each level has a root element not included in list
+#Did this code successfully run on Leetcode : Yes
+#Any problem you faced while coding this : No
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: Node
+        :rtype: List[List[int]]
+        """
+        
+        if root==None:
+            return []
+        
+        result = [] #create a result array
+        q = deque() #create a queue
+        q.append(root) #push the root node into the q
+        
+        
+        while q:
+            size = len(q) #find thecurrent length of the queue
+            level=[] #create a new level list for each level
+            for i in range(size): #traverse the size of the queue
+                node = q.popleft() #pop FIFO element from q
+                level.append(node.val) #append element to the level
+                
+                for child in node.children: #append the children into the queue
+                    q.append(child)
+                
+            result.append(level) #append the level list into the result
+        return result #return result
